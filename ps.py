@@ -18,7 +18,7 @@ if __name__ == "__main__":
 		global pid
 		if key == Key.print_screen:
 			print(ctrlon, '{0} pressed'.format(key))
-			print_screen_png('snap_%03d.png' % pid)
+			print_screen_png('test_%03d.png' % pid)
 			pid +=1
 
 
@@ -28,8 +28,7 @@ if __name__ == "__main__":
 		if key == Key.esc:
 			# Stop listener
 			return False
-		if key == Key.ctrl_l:
-			ctrlon=True
+
 
 	with Listener(
 			on_press=on_press,
