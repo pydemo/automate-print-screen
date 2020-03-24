@@ -1,15 +1,15 @@
 import sys
 from pprint import pprint as pp
 from pynput.keyboard import Key, Listener, Controller
+from PIL import Image, ImageGrab
+
 import click
 click.disable_unicode_literals_warning = True
 
-def print_screen_png(fname):
-	import numpy as np
-	import pyautogui,cv2
-	image = pyautogui.screenshot()
-	image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-	cv2.imwrite(fname, image)
+def print_screen(fname, itype="JPEG"):
+	img = ImageGrab.grab()
+	img.save(fname, itype, quality=100, subsampling=0)
+	
 
 @click.command()
 @click.option('-f', 	'--file_name', 			default = 'snap', 	help = 'File prefix.', required=True )
@@ -23,9 +23,9 @@ def start_loop(**kwargs):
 		global pid
 		if key == Key.print_screen:
 			print('{0} pressed'.format(key))
-			pngfn='%s_%03d.png' % (fn,pid)
-			print_screen_png(pngfn)
-			print('Screenshot %d is saved to "%s"' % (pid, pngfn))
+			imgfn='%s_%03d.jpg' % (fn,pid)
+			print_screen(imgfn)
+			print('Screenshot %d is saved to "%s"' % (pid, imgfn))
 			pid +=1
 
 	def on_release(key):
